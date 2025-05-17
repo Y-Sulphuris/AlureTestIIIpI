@@ -54,13 +54,6 @@
             <artifactId>logback-classic</artifactId>
             <version>1.4.14</version>
         </dependency>
-
-        <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>aspectjweaver</artifactId>
-            <version>${aspectj.version}</version>
-            <scope>runtime</scope>
-        </dependency>
     </dependencies>
 
     <build>

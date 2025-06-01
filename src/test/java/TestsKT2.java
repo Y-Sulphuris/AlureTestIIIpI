@@ -16,29 +16,29 @@ public class TestsKT2 {
     @Test
     public void test1() throws InterruptedException {
         driver.get(URL);
-
+	
        
         var scroll_arrow = driver.findElement(By.className("carousel-control-next"));
         scroll_arrow.click();
-
-       
+		
+       	
         Thread.sleep(Duration.ofSeconds(2).toMillis());
-
-       
+		
+       	
         scroll_arrow = driver.findElement(By.className("carousel-control-prev"));
         scroll_arrow.click();
-
+		
         Thread.sleep(Duration.ofSeconds(2).toMillis());
-
-       
+		
+       	
         var mainProduct = driver.findElement(By.id("carousel-banner-0"));
         mainProduct.click();
-
+		
         driver.quit();
     }
 
-   
-   
+	
+	
     private List<WebElement> getCurrencyItems() {
         WebElement dropdown_toggle = driver.findElement(By.className("dropdown-toggle"));
         dropdown_toggle.click();

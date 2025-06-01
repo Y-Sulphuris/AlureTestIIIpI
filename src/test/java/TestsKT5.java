@@ -4,10 +4,16 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -18,10 +24,40 @@ public class TestsKT5 {
 
     @BeforeAll
     static void setUp() {
-        driver = new FirefoxDriver();
+        driver = createDriver();
         driver.manage().window().maximize();
         adminPanel = new AdminPanel(driver);
     }
+	
+	private static RemoteWebDriver createDriver() {
+		try {
+			FirefoxOptions options = new FirefoxOptions();
+			options.setCapability("browserVersion", "125.0");
+			options.setCapability("selenoid:options", new HashMap<String, Object>() {{
+				/* How to add test badge */
+				put("name", "Test badge...");
+				
+				/* How to set session timeout */
+				put("sessionTimeout", "15m");
+				
+				/* How to set timezone */
+				put("env", new ArrayList<String>() {{
+					add("TZ=UTC");
+				}});
+				
+				/* How to add "trash" button */
+				put("labels", new HashMap<String, Object>() {{
+					put("manual", "true");
+				}});
+				
+				/* How to enable video recording */
+				put("enableVideo", true);
+			}});
+			return new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), options);
+		} catch (MalformedURLException e) {
+			throw new RuntimeException(e);
+		}
+	}
 
     @ParameterizedTest
 	@CsvSource({"Devices,devices"})
